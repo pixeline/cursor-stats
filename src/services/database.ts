@@ -55,6 +55,17 @@ export function getCursorDBPath(): string {
 }
 
 export async function getCursorTokenFromDB(): Promise<string | undefined> {
+  // Check for manually configured token first (fallback for non-standard setups)
+  const config = vscode.workspace.getConfiguration('cursorStats');
+  const manualToken = config.get<string>('apiToken');
+  if (manualToken) {
+    const trimmedToken = manualToken.trim();
+    if (trimmedToken !== '') {
+      log('[Database] Using manually configured API token from settings');
+      return trimmedToken;
+    }
+  }
+
   try {
     const dbPath = getCursorDBPath();
     log(`[Database] Attempting to open database at: ${dbPath}`);

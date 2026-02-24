@@ -20,6 +20,7 @@ import { CursorUsageResponse } from '../interfaces/types';
 // Track unknown models to avoid repeated notifications
 let unknownModelNotificationShown = false;
 let detectedUnknownModels: Set<string> = new Set();
+let noTokenNotificationShown = false;
 
 export async function updateStats(statusBarItem: vscode.StatusBarItem) {
     try {
@@ -38,8 +39,22 @@ export async function updateStats(statusBarItem: vscode.StatusBarItem) {
             log('[Status Bar] Updated status bar with no token message');
             statusBarItem.show();
             log('[Status Bar] Status bar visibility updated after no token');
+            if (!noTokenNotificationShown) {
+                noTokenNotificationShown = true;
+                vscode.window.showErrorMessage(
+                    t('statusBar.couldNotRetrieveToken'),
+                    t('statusBar.openSettings')
+                ).then((selection) => {
+                    if (selection === t('statusBar.openSettings')) {
+                        vscode.commands.executeCommand('workbench.action.openSettings', '@ext:Dwtexe.cursor-stats');
+                    }
+                });
+            }
             return;
         }
+
+        // Reset no-token notification flag since we have a valid token
+        noTokenNotificationShown = false;
 
         // Show status bar early to ensure visibility
         statusBarItem.show();

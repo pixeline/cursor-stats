@@ -2,6 +2,19 @@
 
 All notable changes to the "cursor-stats" extension will be documented in this file.
 
+## [1.1.7] - 2026-02-24
+
+### Added
+- 🔑 **Manual Token Setting**: Added `cursorStats.apiToken` configuration option for users who see "No token found"
+  - Allows manually supplying the `WorkosCursorSessionToken` when auto-detection fails (e.g., non-standard install paths, permission issues)
+  - Token can be found in browser cookies on cursor.com after signing in
+  - Takes precedence over database auto-detection when set
+
+### Fixed
+- 🚨 **"No token found" error**: Extension now shows a one-time actionable error notification with an **Open Settings** button
+  - Tooltip updated to guide users toward the new `cursorStats.apiToken` setting
+  - Notification is suppressed on subsequent refresh cycles to avoid spam
+
 ## [1.1.6] - 2025-07-20
 
 ### Fixed

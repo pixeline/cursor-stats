@@ -321,6 +321,12 @@
             "description": "Percentage threshold at which progress bars turn red (critical).",
             "scope": "window"
           },
+          "cursorStats.apiToken": {
+            "type": "string",
+            "default": "",
+            "description": "Manually provide your Cursor session token (WorkosCursorSessionToken). Only needed if the token cannot be retrieved automatically from the database. You can find this token in your browser cookies on cursor.com after signing in. Keep this value confidential and do not share it.",
+            "scope": "window"
+          },
           "cursorStats.customDatabasePath": {
             "type": "string",
             "default": "",
